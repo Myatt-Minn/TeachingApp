@@ -38,6 +38,7 @@ dependencies:
   firebase_storage: ^12.3.0
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.0
   flutter_local_notifications: ^17.2.2
   flutter_native_splash: ^2.4.1
   font_awesome_flutter: ^10.7.0
@@ -80,7 +81,7 @@ flutter:
     - assets/tuto/
 
 icons_launcher:
-  image_path: "assets/logo.jpg"
+  image_path: "assets/1024.png"
   platforms:
     android:
       enable: true
@@ -90,7 +91,7 @@ icons_launcher:
 flutter_native_splash:
   color: "#ffffff"
   background_image: "assets/logo.png"
-  image: assets/logo.png
+  image: assets/t1.jpg
   #branding: assets/logo.png
   #branding_mode: bottom
   android_12:

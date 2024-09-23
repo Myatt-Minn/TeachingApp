@@ -30,7 +30,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: controller.sendPasswordResetEmail,
-                  child: Text("Continue"),
+                  child: Text("Send Password Reset Email"),
                 ),
               ],
             ),

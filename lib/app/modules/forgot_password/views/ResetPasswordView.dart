@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teamx/app/modules/forgot_password/controllers/forgot_password_controller.dart';
-
 class ResetPasswordView extends StatelessWidget {
   ResetPasswordView({super.key});
   final ForgotPasswordController controller = Get.find();
@@ -19,11 +18,11 @@ class ResetPasswordView extends StatelessWidget {
               children: [
                 Image.asset('assets/password_recovery/3.png', height: 200),
                 const SizedBox(height: 20),
-                const Text("What would you like your new password to be?"),
+                const Text("Enter Your New Password"),
                 TextField(
                   obscureText: true,
                   decoration: const InputDecoration(
-                    labelText: "Enter Your New Password",
+                    labelText: "New Password",
                     prefixIcon: Icon(Icons.lock),
                   ),
                   onChanged: (value) => controller.newPassword.value = value,
@@ -31,7 +30,7 @@ class ResetPasswordView extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: controller.resetPassword,
-                  child: const Text("Done"),
+                  child: const Text("Reset Password"),
                 ),
               ],
             ),

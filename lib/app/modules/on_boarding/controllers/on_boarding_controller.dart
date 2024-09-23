@@ -22,7 +22,7 @@ class OnBoardingController extends GetxController {
         child: GFImageOverlay(
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(16),
-          color: Colors.orange,
+          color: const Color(0xFF8E2DE2),
           image: const AssetImage(StringConsts.appLogo),
           boxFit: BoxFit.contain,
           colorFilter:
@@ -51,7 +51,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage(StringConsts.appLogo),
+              image: const AssetImage("assets/onboarding/t1.jpg"),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),
@@ -63,7 +63,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage(StringConsts.appLogo),
+              image: const AssetImage("assets/onboarding/t2.jpg"),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),
@@ -75,7 +75,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage(StringConsts.appLogo),
+              image: const AssetImage("assets/onboarding/t3.webp"),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),

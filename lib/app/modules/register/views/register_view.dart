@@ -56,7 +56,7 @@ class RegisterView extends GetView<RegisterController> {
                               controller.chooseImage();
                             }
                           : null,
-                      color: ColorConsts.priColor,
+                      color: const Color(0xFF8E2DE2),
                       child: const Text("Choose Image..."),
                     )),
 
@@ -145,7 +145,7 @@ class RegisterView extends GetView<RegisterController> {
                         : () {
                             controller.signUp();
                           },
-                    color: ColorConsts.priColor,
+                    color: const Color(0xFF8E2DE2),
                     blockButton: true,
                     child: controller.isSignUpLoading.value
                         ? const GFLoader()
@@ -167,7 +167,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     TappableTextSpan(
                       style: const TextStyle(
-                        color: Colors.blue,
+                        color: const Color(0xFF8E2DE2),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -186,7 +186,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     TappableTextSpan(
                       style: const TextStyle(
-                        color: Colors.blue,
+                        color: Color(0xFF8E2DE2),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
