@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:teamx/app/data/string_consts.dart';
 import 'package:teamx/app/modules/home/controllers/home_controller.dart'; // Ensure you have the correct import for GFAppBar
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -30,7 +31,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         type: GFButtonType.transparent,
       ),
-      title: const Text("teamx"),
+      title: Text(StringConsts.appName),
       actions: <Widget>[
         GFIconButton(
           icon: const Icon(

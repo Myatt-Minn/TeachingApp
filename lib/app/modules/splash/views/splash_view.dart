@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:getwidget/types/gf_loader_type.dart';
+import 'package:teamx/app/data/string_consts.dart';
 
 import '../controllers/splash_controller.dart';
 
@@ -28,7 +29,7 @@ class SplashView extends GetView<SplashController> {
                   ),
                   const SizedBox(height: 30),
                   const Text(
-                    'teamx', // Replace with your app name
+                    StringConsts.appTitle, // Replace with your app name
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

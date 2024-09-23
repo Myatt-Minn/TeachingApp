@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/image/gf_image_overlay.dart';
+import 'package:teamx/app/data/string_consts.dart';
 
 class OnBoardingController extends GetxController {
   //TODO: Implement OnBoardingController
@@ -22,7 +23,7 @@ class OnBoardingController extends GetxController {
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(16),
           color: Colors.orange,
-          image: const AssetImage('assets/logo.png'),
+          image: const AssetImage(StringConsts.appLogo),
           boxFit: BoxFit.contain,
           colorFilter:
               ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.darken),
@@ -50,7 +51,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage('assets/logo.png'),
+              image: const AssetImage(StringConsts.appLogo),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),
@@ -62,7 +63,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage('assets/logo.png'),
+              image: const AssetImage(StringConsts.appLogo),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),
@@ -74,7 +75,7 @@ class OnBoardingController extends GetxController {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
-              image: const AssetImage('assets/logo.png'),
+              image: const AssetImage(StringConsts.appLogo),
               fit: BoxFit.contain,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.darken),

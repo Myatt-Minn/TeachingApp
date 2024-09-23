@@ -7,9 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:teamx/app/data/string_consts.dart';
 import 'package:video_player/video_player.dart';
 
 class AdminHomeController extends GetxController {
@@ -21,16 +23,25 @@ class AdminHomeController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController licensekeyController = TextEditingController();
+  final TextEditingController websiteLinkCon = TextEditingController();
+  final TextEditingController phoneNumberCon = TextEditingController();
 
   var username = ''.obs;
   var email = ''.obs;
   var phone = ''.obs;
   var address = ''.obs;
   var role = ''.obs;
+  var websitelink = StringConsts.website.obs;
+  var phonenumber = StringConsts.phone.obs;
   var usercount = 0.obs;
   var pdfcount = 0.obs;
   var videocount = 0.obs;
-  var profileUrl = ''.obs;
+  var bannercount = 0.obs;
+  final box = GetStorage();
+
+  var profileUrl =
+      'https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg'
+          .obs;
   Rx<bool> finished = false.obs;
   final expireOn = ''.obs;
 
@@ -44,10 +55,13 @@ class AdminHomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await getUserCount();
-    await getPdfCount();
-    await getVideoCount();
+    await amountCounter("uploaded_videos");
+    await amountCounter("uploaded_files");
+    await amountCounter("users");
+    await amountCounter("images");
     _fetchIsChecked();
+    loadWebsiteLink();
+    loadPhoneNumber();
   }
 
   @override
@@ -74,51 +88,89 @@ class AdminHomeController extends GetxController {
     super.onClose();
   }
 
-  Future<void> getUserCount() async {
-    try {
-      // Get the reference to the 'users' collection
-      CollectionReference usersRef =
-          FirebaseFirestore.instance.collection('users');
+  // Save the updated website link and show Snackbar
+  void changeWebsiteLink(String name) {
+    websitelink.value = name;
+    Get.snackbar(
+      'Updated',
+      'Website Link has Updated',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: const Color(0xFF8E2DE2),
+      colorText: Colors.white,
+    );
 
-      // Retrieve all documents in the 'users' collection
-      QuerySnapshot userSnapshot = await usersRef.get();
+    Get.back(); // Close the dialog
+    // Save to GetStorage
+    box.write('website_link', name);
+  }
 
-      // Return the number of documents (users) in the collection
-      usercount.value = userSnapshot.size;
-    } catch (e) {
-      print('Error getting user count: $e');
+  // Load the website link from GetStorage
+  void loadWebsiteLink() {
+    String? savedLink = box.read('website_link');
+
+    if (savedLink != null) {
+      websitelink.value = savedLink;
     }
   }
 
-  Future<void> getPdfCount() async {
-    try {
-      // Get the reference to the 'users' collection
-      CollectionReference pdfRef =
-          FirebaseFirestore.instance.collection('uploaded_files');
+  // Save the updated website link and show Snackbar
+  void changePhoneNumber(String name) {
+    phonenumber.value = name;
+    Get.snackbar(
+      'Updated',
+      'Phone Number has Updated',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: const Color(0xFF8E2DE2),
+      colorText: Colors.white,
+    );
 
-      // Retrieve all documents in the 'users' collection
-      QuerySnapshot pdfSnapshot = await pdfRef.get();
+    Get.back(); // Close the dialog
+    // Save to GetStorage
+    box.write('phone', name);
+  }
 
-      // Return the number of documents (users) in the collection
-      pdfcount.value = pdfSnapshot.size;
-    } catch (e) {
-      print('Error getting pdf count: $e');
+  // Load the website link from GetStorage
+  void loadPhoneNumber() {
+    String? savedLink = box.read('phone');
+
+    if (savedLink != null) {
+      phonenumber.value = savedLink;
     }
   }
 
-  Future<void> getVideoCount() async {
+  Future<void> amountCounter(String collectionName) async {
     try {
-      // Get the reference to the 'users' collection
-      CollectionReference videoRef =
-          FirebaseFirestore.instance.collection('uploaded_videos');
+      // Get the reference to the specified collection
+      CollectionReference collectionRef =
+          FirebaseFirestore.instance.collection(collectionName);
 
-      // Retrieve all documents in the 'users' collection
-      QuerySnapshot videoSnap = await videoRef.get();
+      // Retrieve all documents in the specified collection
+      QuerySnapshot collectionSnap = await collectionRef.get();
 
-      // Return the number of documents (users) in the collection
-      videocount.value = videoSnap.size;
+      // Return the number of documents in the collection
+      int count = collectionSnap.size;
+
+      // You can handle different counts here (e.g., update the correct count variable)
+      switch (collectionName) {
+        case 'uploaded_videos':
+          videocount.value = count;
+          break;
+        case 'users':
+          usercount.value = count;
+          break;
+        case 'uploaded_files':
+          pdfcount.value = count;
+          break;
+        case 'images':
+          bannercount.value = count;
+          break;
+        default:
+          print('Unknown collection name');
+      }
+
+      print('Count of $collectionName: $count');
     } catch (e) {
-      print('Error getting video count: $e');
+      print('Error getting count for $collectionName: $e');
     }
   }
 
@@ -140,6 +192,8 @@ class AdminHomeController extends GetxController {
     });
   }
 
+  File? selectedFile; // Global variable to store the selected file
+
   Future<void> chooseFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -147,42 +201,62 @@ class AdminHomeController extends GetxController {
     );
 
     if (result != null) {
-      File file = File(result.files.single.path!);
-      print('File was choosen $file');
-      uploadPDF(file);
+      selectedFile = File(
+          result.files.single.path!); // Store the file in a global variable
+      Get.snackbar(
+        'PDF File Picked',
+        'You have choosen a PDF file!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: const Color(0xFF8E2DE2),
+        colorText: Colors.white,
+      );
     } else {
       // User canceled the picker
       print('User canceled or something went wrong');
     }
   }
 
-  Future<void> uploadPDF(file) async {
-    try {
-      // Create a reference to the storage location
-      FirebaseStorage storage = FirebaseStorage.instance;
-      String filePath = 'uploads/doc.pdf'; // Change the path as needed
-      Reference ref = storage.ref().child(filePath);
+  Future<void> uploadPDF(String filename) async {
+    if (selectedFile != null) {
+      try {
+        // Create a reference to the storage location
+        FirebaseStorage storage = FirebaseStorage.instance;
+        String filePath =
+            'uploads/${DateTime.now().millisecondsSinceEpoch}.pdf'; // Unique file path
+        Reference ref = storage.ref().child(filePath);
 
-      // Upload the file to the reference
-      await ref.putFile(file);
+        // Upload the file to the reference
+        await ref.putFile(selectedFile!);
 
-      // Optionally, get the download URL
-      String downloadUrl = await ref.getDownloadURL();
+        // Optionally, get the download URL
+        String downloadUrl = await ref.getDownloadURL();
+        Get.snackbar(
+          'Uploaded',
+          'You have successfully uploaded a PDF file!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: const Color(0xFF8E2DE2),
+          colorText: Colors.white,
+        );
+
+        storeFileData(
+          downloadUrl,
+          filename,
+        );
+
+        // Optionally, update UI or do something else after upload
+        await amountCounter("uploaded_files");
+      } catch (e) {
+        print('Error occurred while uploading file: $e');
+      }
+    } else {
+      print('No file selected');
       Get.snackbar(
-        'Uploaded',
-        'You have successfully uploaded a pdf file!',
+        'Error',
+        'Please select a file before uploading!',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFF8E2DE2),
+        backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      storeFileData(
-        downloadUrl,
-        FirebaseAuth.instance.currentUser!.uid,
-      );
-      await getPdfCount();
-      //storeFileData(downloadUrl, 'doc.pdf');
-    } catch (e) {
-      print('Error occurred while uploading file: $e');
     }
   }
 
@@ -299,7 +373,7 @@ class AdminHomeController extends GetxController {
         // Add any other metadata (file size, etc.)
       });
       finished.value = true;
-      await getVideoCount();
+      await amountCounter("uploaded_videos");
     } catch (e) {
       print('Error storing video metadata: $e');
     }
@@ -333,6 +407,7 @@ class AdminHomeController extends GetxController {
             backgroundColor: const Color(0xFF8E2DE2),
             colorText: Colors.white,
           );
+          amountCounter("images");
         } else {
           print('No image selected.');
         }

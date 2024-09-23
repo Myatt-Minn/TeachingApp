@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:teamx/app/data/string_consts.dart';
 import 'package:teamx/app/modules/splash/bindings/splash_binding.dart';
 
 import 'app/routes/app_pages.dart';
@@ -15,7 +16,7 @@ void main() async {
 
   runApp(
     GetMaterialApp(
-      title: "teamx",
+      title: StringConsts.appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       //initialRoute: isFirstTime ? AppPages.ON_BOARDING : AppPages.MY_HOME,

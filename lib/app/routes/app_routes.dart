@@ -14,8 +14,6 @@ abstract class Routes {
   static const READ_DOC = _Paths.READ_DOC;
   static const WATCH_TRAINING = _Paths.WATCH_TRAINING;
   static const NOTIFICATION = _Paths.NOTIFICATION;
-  static const SENDNOTIFICATION = _Paths.SENDNOTIFICATION;
-  static const UPLOAD_PDF = _Paths.UPLOAD_PDF;
   static const USERACCOUNTS = _Paths.USERACCOUNTS;
 }
 
@@ -32,7 +30,6 @@ abstract class _Paths {
   static const READ_DOC = '/read-doc';
   static const WATCH_TRAINING = '/watch-training';
   static const NOTIFICATION = '/notification';
-  static const SENDNOTIFICATION = '/sendnotification';
-  static const UPLOAD_PDF = '/upload-pdf';
   static const USERACCOUNTS = '/useraccounts';
+  static const RESETPASSWORD = '/reset-password';
 }

@@ -1,9 +1,13 @@
+import 'dart:ffi';
+
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:teamx/app/data/string_consts.dart';
 import 'package:teamx/app/modules/admin_home/views/widgets/panel_widget.dart';
+import 'package:teamx/app/modules/admin_home/views/widgets/pdf_dialog.dart';
 import 'package:teamx/app/modules/admin_home/views/widgets/upload_dialog.dart';
 
 import '../controllers/admin_home_controller.dart';
@@ -16,7 +20,7 @@ class AdminHomeView extends GetView<AdminHomeController> {
       backgroundColor: const Color.fromARGB(255, 216, 216, 216),
       appBar: GFAppBar(
         backgroundColor: const Color(0xFF8E2DE2),
-        title: const Text("XTraining - Admin"),
+        title: const Text("${StringConsts.appName} - Admin"),
         actions: <Widget>[
           GFIconButton(
             icon: const Icon(
@@ -54,7 +58,7 @@ class AdminHomeView extends GetView<AdminHomeController> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          "Welcome to Xtraning App",
+                          "Welcome to ${StringConsts.appName} App",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -101,7 +105,7 @@ class AdminHomeView extends GetView<AdminHomeController> {
                     PanelWidget(
                       title: 'Banner',
                       icon: Icons.photo,
-                      count: '3 photos',
+                      count: '${controller.bannercount.value} photos',
                       actionText: 'Update',
                       onPressed: () async {
                         controller.pickAndUploadImage();
@@ -113,7 +117,7 @@ class AdminHomeView extends GetView<AdminHomeController> {
                       count: '${controller.pdfcount.value} documents',
                       actionText: 'Update',
                       onPressed: () {
-                        Get.toNamed('/useraccounts');
+                        Get.dialog(PdfDialog());
                       },
                     ),
                     PanelWidget(
@@ -128,19 +132,84 @@ class AdminHomeView extends GetView<AdminHomeController> {
                     PanelWidget(
                       title: 'Website',
                       icon: Icons.web,
-                      count: 'App.com.mm',
+                      count: controller.websitelink.value,
                       actionText: 'Update',
                       onPressed: () {
-                        Get.toNamed('/useraccounts');
+                        Get.dialog(
+                          AlertDialog(
+                            title: const Text('Enter Website Link'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  controller: controller.websiteLinkCon,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Enter Website Link'),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  controller.changeWebsiteLink(
+                                      controller.websiteLinkCon.text);
+                                  Get.snackbar(
+                                    'Updated',
+                                    'Website Name has Updated',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: const Color(0xFF8E2DE2),
+                                    colorText: Colors.white,
+                                  );
+
+                                  Get.back(); // Close the dialog
+                                },
+                                child: const Text('Submit'),
+                              ),
+                            ],
+                          ),
+// Dialog won't close on outside tap
+                        );
                       },
                     ),
                     PanelWidget(
                       title: 'Phone Number',
                       icon: Icons.phone,
-                      count: '09756192042',
+                      count: controller.phonenumber.value,
                       actionText: 'Update',
                       onPressed: () {
-                        Get.toNamed('/useraccounts');
+                        Get.dialog(
+                          AlertDialog(
+                            title: const Text('Enter Phone Number'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  controller: controller.phoneNumberCon,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Enter Phone Number'),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  controller.changePhoneNumber(
+                                      controller.phoneNumberCon.text);
+                                  Get.snackbar(
+                                    'Updated',
+                                    'Phone Number has Updated',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: const Color(0xFF8E2DE2),
+                                    colorText: Colors.white,
+                                  );
+
+                                  Get.back(); // Close the dialog
+                                },
+                                child: Text('Submit'),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                   ],

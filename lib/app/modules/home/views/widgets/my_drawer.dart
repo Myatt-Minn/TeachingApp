@@ -88,11 +88,12 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.password_outlined),
-                title: Text('Recovery Password'),
-                onTap: null,
-              ),
+              ListTile(
+                  leading: Icon(Icons.password_outlined),
+                  title: Text('Recovery Password'),
+                  onTap: () {
+                    Get.toNamed('/forgot-password');
+                  }),
               const ListTile(
                 leading: Icon(Icons.privacy_tip),
                 title: Text('Privacy Policy'),
@@ -128,10 +129,10 @@ class MyDrawer extends StatelessWidget {
                 title: Text('Send Message'),
                 onTap: null,
               ),
-              const ListTile(
+              ListTile(
                 leading: Icon(Icons.web_stories),
                 title: Text('Go to website'),
-                onTap: null,
+                onTap: controller.goToWebsite,
               ),
               const Divider(
                 color: Colors.black, // Line color

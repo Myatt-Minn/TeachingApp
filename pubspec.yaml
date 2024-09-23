@@ -74,6 +74,7 @@ flutter:
     - assets/logo/
     - assets/onboarding/
     - assets/training/
+    - assets/password_recovery/
     - assets/privacy_and_policy/
     - assets/doc/
     - assets/tuto/

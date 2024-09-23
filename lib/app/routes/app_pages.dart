@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-
+import 'package:teamx/app/modules/forgot_password/views/ResetPasswordView.dart';
 import '../modules/admin_home/bindings/admin_home_binding.dart';
 import '../modules/admin_home/views/admin_home_view.dart';
 import '../modules/auth_gate/bindings/auth_gate_binding.dart';
@@ -18,12 +18,8 @@ import '../modules/read_doc/bindings/read_doc_binding.dart';
 import '../modules/read_doc/views/read_doc_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
-import '../modules/sendnotification/bindings/sendnotification_binding.dart';
-import '../modules/sendnotification/views/sendnotification_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/upload_pdf/bindings/upload_pdf_binding.dart';
-import '../modules/upload_pdf/views/upload_pdf_view.dart';
 import '../modules/useraccounts/bindings/useraccounts_binding.dart';
 import '../modules/useraccounts/views/useraccounts_view.dart';
 import '../modules/watch_training/bindings/watch_training_binding.dart';
@@ -94,19 +90,14 @@ class AppPages {
       binding: NotificationBinding(),
     ),
     GetPage(
-      name: _Paths.SENDNOTIFICATION,
-      page: () => const SendnotificationView(),
-      binding: SendnotificationBinding(),
-    ),
-    GetPage(
-      name: _Paths.UPLOAD_PDF,
-      page: () => const UploadPdfView(),
-      binding: UploadPdfBinding(),
-    ),
-    GetPage(
       name: _Paths.USERACCOUNTS,
       page: () => const UseraccountsView(),
       binding: UseraccountsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESETPASSWORD,
+      page: () => ResetPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

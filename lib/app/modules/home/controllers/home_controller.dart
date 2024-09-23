@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/bottom_sheet/gf_bottom_sheet.dart';
 import 'package:intl/intl.dart';
 import 'package:teamx/app/data/sendNotificationHandler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -122,6 +123,22 @@ class HomeController extends GetxController {
       isLoading.value = false;
     } catch (e) {
       print('Error retrieving images: $e');
+    }
+  }
+
+  void goToWebsite() async {
+    Uri url = Uri.parse("https://app.com.mm/");
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      Get.snackbar(
+        'Cannot open the website',
+        'Something wrong with Internet Connection or the app!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }

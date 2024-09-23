@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:teamx/app/data/string_consts.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -23,7 +24,7 @@ class LoginView extends GetView<LoginController> {
                     height: 65,
                   ),
                   const GFAvatar(
-                    backgroundImage: AssetImage('assets/logo/xlogo.png'),
+                    backgroundImage: AssetImage(StringConsts.appLogo),
                     shape: GFAvatarShape.circle,
                     size: GFSize.LARGE,
                     maxRadius: 50,
@@ -33,7 +34,7 @@ class LoginView extends GetView<LoginController> {
                     height: 50,
                   ),
                   Text(
-                    'Xtraining',
+                    StringConsts.appName,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -147,15 +148,12 @@ class LoginView extends GetView<LoginController> {
                           ? const GFLoader(
                               type: GFLoaderType.ios,
                             )
-                          : Text(
+                          : const Text(
                               "Login",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color),
+                                  color: Colors.white),
                             )),
                     ),
                   ),
